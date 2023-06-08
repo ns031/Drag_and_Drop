@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag and Drop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="content">
+        <div class="container">
+            <div id="left">
+                <div class="list" draggable="true">List Item 1</div>
+                <div class="list" draggable="true">List Item 2</div>
+                <div class="list" draggable="true">List Item 3</div>
+            </div>
+            <div id="right"></div>
+        </div>
+        <div class="invisible">
+            <h2 id="successMessage"></h2>
+            <button id="resetButton">Reset</button>
+        </div>
+    </div> 
+
+    <script>
+        // Get necessary elements from the DOM
+        const lists = document.getElementsByClassName("list");
+        const rightBox = document.getElementById("right");
+        const successMessage = document.getElementById("successMessage");
+        const resetButton = document.getElementById("resetButton");
+        const leftBox = document.getElementById("left");
+
+        // Add event listeners for dragstart and dragend on list items in the left container
+        for (const list of lists) {
+            list.addEventListener("dragstart", function (e) {
+                const selected = e.target;
+                selected.classList.add("dragging");
+            });
+
+            list.addEventListener("dragend", function (e) {
+                const selected = e.target;
+                selected.classList.remove("dragging");
+            });
+        }
+
+        // Add event listeners for dragover, dragenter, dragleave, and drop on the right container
+        rightBox.addEventListener("dragover", function (e) {
+            e.preventDefault();
+        });
+
+        rightBox.addEventListener("dragenter", function (e) {
+            e.preventDefault();
+            rightBox.classList.add("dragging-over");
+        });
+
+        rightBox.addEventListener("dragleave", function (e) {
+            rightBox.classList.remove("dragging-over");
+        });
+
+        rightBox.addEventListener("drop", function (e) {
+            e.preventDefault();
+            const selected = document.querySelector(".dragging");
+            if (selected) {
+                rightBox.appendChild(selected);
+                selected.classList.remove("dragging");
+                rightBox.classList.remove("dragging-over");
+                successMessage.style.display = "block";
+                successMessage.textContent = "Item dropped successfully!";
+            }
+        });
+
+        // Add click event listener for the reset button
+        resetButton.addEventListener("click", function () {
+            // Clear the second container
+            rightBox.innerHTML = "";
+            // Reset the first container
+            leftBox.innerHTML = "";
+            leftBox.innerHTML += `
+                <div class="list" draggable="true">List Item 1</div>
+                <div class="list" draggable="true">List Item 2</div>
+                <div class="list" draggable="true">List Item 3</div>
+            `;
+            // Reset success message
+            successMessage.style.display = "none";
+            
+            // Add event listeners to the new list items
+            for (const list of lists) {
+                list.addEventListener("dragstart", function (e) {
+                    const selected = e.target;
+                    selected.classList.add("dragging");
+                });
+
+                list.addEventListener("dragend", function (e) {
+                    const selected = e.target;
+                    selected.classList.remove("dragging");
+                });
+            }
+        });
+    </script>
+
+</body>
+</html>

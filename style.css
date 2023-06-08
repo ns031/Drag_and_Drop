@@ -1,0 +1,50 @@
+/* CSS style */
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    box-sizing: border-box;
+}
+.content{
+    align-items: center;
+    justify-content: center;
+}
+.container {
+    align-items: center;
+    justify-content: center;
+    height: 80vh;
+    display: flex;
+}
+#right,
+#left {
+    border: 5px solid saddlebrown;
+    width: 350px;
+    min-height: 350px;
+    margin: 4%;
+    background-color: antiquewhite;
+}
+.list {
+    color: white;
+    background-color: saddlebrown;
+    padding: 4%;
+    margin: 5%;
+    letter-spacing: 2px;
+}
+.dragging {
+    opacity: 0.5;
+}
+#successMessage {
+    display: none;
+    color: rgb(0, 150, 0);
+    font-weight: bold;
+}
+#resetButton {
+    color: white;
+    font-size: large;
+    margin-top: 15px;
+    padding: 0.5%;
+    border: 0;
+    background-color: saddlebrown;
+    box-shadow: 2px 2px 2px rgb(106, 47, 5);
+}
